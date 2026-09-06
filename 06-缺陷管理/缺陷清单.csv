@@ -1,0 +1,19 @@
+缺陷ID,标题,严重等级,所属模块,复现步骤,预期结果,实际结果,状态,发现版本,修复版本
+BUG-001,旋转后碰撞检查使用了移动前cells导致旋转穿墙,P1,tetris_core.py,1.方块贴右墙 2.调用rotate,旋转被墙阻挡或wall-kick,旧cells参与碰撞但self.piece.cells已改,已修复,v1.0,v1.1
+BUG-002,消行后board引用未更新导致棋盘状态错误,P1,tetris_core.py,1.填满底行 2.调用_clear_lines,棋盘消除满行,board变量指向新列表但外部读取旧引用,已修复,v1.0,v1.1
+BUG-003,O方块旋转后cells顺序变化致显示异常,P3,tetris_core.py,1.O方块 2.连续旋转,cells集合不变,cells列表顺序变化渲染闪烁,已修复,v1.0,v1.1
+BUG-004,游戏结束后move_down仍尝试锁定致重复生成,P2,tetris_core.py,1.is_over=True 2.调用move_down,直接返回False,仍执行碰撞与锁定逻辑,已修复,v1.0,v1.1
+BUG-005,硬降分数计算使用drop-1致少计2分,P1,tetris_core.py,1.硬降N格 2.读取分数,分数+2N,分数+2(N-1),已修复,v1.0,v1.1
+BUG-006,wall-kick偏移顺序不合理贴墙旋转常失败,P2,tetris_core.py,1.I方块贴右墙 2.旋转,大概率成功,常失败因偏移尝试顺序,已修复,v1.0,v1.1
+BUG-007,幽灵方块计算用Piece构造未拷贝cells致状态污染,P2,tetris_core.py,1.调用ghost_y 2.观察原piece,原piece不变,测试中原piece.cells被意外修改,已修复,v1.0,v1.1
+BUG-008,combo初始值0导致首次消行多加分,P2,tetris_core.py,1.首次消行 2.计算combo加分,首次combo=-1不加分,combo=0致加0但逻辑不一致,已修复,v1.0,v1.1
+BUG-009,TOPOUT时board已写入但未触发GameOver致棋盘脏,P1,tetris_core.py,1.顶部填满 2._spawn,抛GameOver,已写入棋盘但异常未含最新board,已修复,v1.0,v1.1
+BUG-010,最高分文件JSON损坏时启动崩溃,P2,tetris_game.py,1.highscore.json写乱码 2.启动,降级为0,抛JSONDecodeError,已修复,v1.0,v1.1
+BUG-011,旋转碰撞检查ay<0时未跳过致越界,P2,tetris_core.py,1.方块在顶部旋转 2.有cell y<0,跳过y<0的格子,board[ay]越界崩溃,已修复,v1.0,v1.1
+BUG-012,速度计算未封顶致等级过高速度NaN,P3,tetris_core.py,1.等级设极大 2.读取speed,封顶MAX_SPEED,speed超出上限,已修复,v1.0,v1.1
+BUG-013,snapshot返回的board是浅拷贝致外部修改污染,P2,tetris_core.py,1.取snapshot 2.改snapshot.board,原棋盘不变,原棋盘被改,已修复,v1.0,v1.1
+BUG-014,7-bag取完后未及时补袋致next为空,P1,tetris_core.py,1.取7个 2.调用peek,返回下一个,IndexError,已修复,v1.0,v1.1
+BUG-015,消行计分未乘以等级致分数错误,P1,tetris_core.py,1.等级2消1行,分数+200,分数+100,已修复,v1.0,v1.1
+BUG-016,锁定时方块格子ay<0未跳过致board越界,P2,tetris_core.py,1.方块在顶部锁定 2.有格y<0,跳过越界格,board[ay]越界,已修复,v1.0,v1.1
+BUG-017,paused状态下自动下落仍在执行,P2,tetris_game.py,1.按P暂停 2.等待,蛇停止下落,仍按间隔下落,已修复,v1.0,v1.1
+BUG-018,游戏结束遮罩下棋盘仍响应按键,P3,tetris_game.py,1.over态 2.按方向键,无响应,方块仍可操作,已修复,v1.0,v1.1
